@@ -1,8 +1,9 @@
-import React from 'react'
+import React from "react";
 
 const Carousel = () => {
   return (
     <div>
+
         <div id="carouselExampleControls" className="carousel slide carousel-fade" data-bs-ride="carousel">
   <div className="carousel-inner">
     <div className="carousel-item active">
@@ -29,3 +30,5 @@ const Carousel = () => {
 }
 
 export default Carousel
+
+      
