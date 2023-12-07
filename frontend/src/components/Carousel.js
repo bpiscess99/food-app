@@ -4,7 +4,7 @@ const Carousel = () => {
   return (
     <div>
 
-        <div id="carouselExampleControls" className="carousel slide carousel-fade" data-bs-ride="carousel">
+<div id="carouselExampleControls" className="carousel slide carousel-fade" data-bs-ride="carousel">
   <div className="carousel-inner">
     <div className="carousel-item active">
       <img src="https://source.unsplash.com/random/900*700/?burger" className="d-block w-100" style={{filter: "brightness(30%"}} alt="..." />
