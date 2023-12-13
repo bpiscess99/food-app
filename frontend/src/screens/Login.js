@@ -29,6 +29,8 @@ const Login = () => {
         formData
       );
       console.log("Registered Successfully", response.data);
+      localStorage.setItem("token", response.data.token)
+      console.log("successfully got", localStorage.getItem("token"))
       navigate("/")
     } catch (error) {
       console.log(error);
