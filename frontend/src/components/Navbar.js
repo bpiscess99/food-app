@@ -57,7 +57,7 @@ const Navbar = () => {
             :
             <div>
             <div className="btn bg-white text-success mx-2 fs-5">
-              Add to Cart
+              My Cart
             </div> 
             <div className="btn bg-white text-danger mx-2 fs-5" onClick={handleLogOut}>
               Logout

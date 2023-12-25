@@ -1,17 +1,39 @@
-import React from 'react'
-
+import React, { useEffect, useRef, useState } from 'react'
+import { useCart, useDispatchCart } from './ContextReducer';
 const Card = (props) => {
+  let dispatch = useDispatchCart()
+  let data = useCart();
+  const priceRef = useRef()
   let options = props.options; 
   let priceOptions = Object.keys(options) // because option is in database value in 0
+  const [qty, setQty] = useState(1)
+  const [size, setSize] = useState("")
+  const handleAddToCart = async () => {
+    await dispatch({
+      type: "ADD", 
+      id:props.foodItem._id, 
+      name:props.foodItem.name,
+      price:finalPrice,
+      qty: qty,
+      size: size
+    })
+    console.log(data)
+  }
+  // final price 
+  let finalPrice = qty * parseInt(options[size]);
+  useEffect(() => {
+  setSize(priceRef.current.value)
+  }, [])
   return (
-    <div>
        <div>
       <div className="card mt-3" style={{"width": "16rem", "maxHeight": "36rem"}}>
-        <img src={props.img} className="card-img-top" alt="..." style={{height: "12rem", objectFit: "fill"}} />
+        <img src={props.foodItem.img} className="card-img-top" alt="..." style={{height: "12rem", objectFit: "fill"}} />
         <div className="card-body">
-          <h5 className="card-title">{props.foodName}</h5>
+          <h5 className="card-title">{props.foodItem.name}</h5>
           <div className="container w-100">
-            <select className="m-2 h-100 rounded" style={{"background" : "green"}} >
+            <select className="m-2 h-100 rounded" 
+            onChange={(e) => setQty(e.target.value)}
+            style={{"background" : "green"}} >
               {Array.from(Array(6), (e,i) =>{
                 return(
                   <option key={i+1} value={i+1}>{i+1}</option>
@@ -19,7 +41,10 @@ const Card = (props) => {
               })}
             </select>
 
-            <select className="m-2 h-100 bg-success rounded" style={{"background" : "green"}}>
+            <select className="m-2 h-100 bg-success rounded"
+            ref={priceRef} 
+            onChange={(e) => setSize(e.target.value)}
+            style={{"background" : "green"}}>
               {
                 priceOptions.map((price) => {
                   return  <option key={price} value={price}>{price}</option>
@@ -27,13 +52,17 @@ const Card = (props) => {
               }
             </select>
             <div className="d-inline h-100 fs-5">
-              Total Price
+              {finalPrice}/-
             </div>
             </div>  
+            <hr>
+            </hr>
+            <button className='btn btn-success justify-center ms-2'
+            onClick={handleAddToCart}
+            style={{background: "green", color: "white"}}>Add to Cart</button>
         </div>
       </div>
       </div> 
-    </div>
   )
 }
 

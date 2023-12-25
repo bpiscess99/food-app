@@ -131,12 +131,12 @@ const Home = () => {
                           (item) => (item.CategoryName === category.CategoryName)
                         && (item.name.toLowerCase().includes(search.toLocaleString()))
                         ) 
-                      .map((item) => {
+                      .map((items) => {
                         return (
-                          <div key={item._id} className="col-12 col-md-6 col-lg-3">
-                            <Card foodName={item.name}
-                            options={item.options[0]}
-                            img={item.img}
+                          <div key={items._id} className="col-12 col-md-6 col-lg-3">
+                            <Card foodItem={items}
+                            options={items.options[0]}
+                            
                             ></Card>
                           </div>
                         );
