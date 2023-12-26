@@ -1,0 +1,30 @@
+const asyncHandler = require("express-async-handler");
+const mongoose = require("mongoose");
+
+// Get food Category
+const foodCategory = asyncHandler(async (req, res) => {
+    const category = await mongoose.connection.db.collection("foodCategory").find({}).toArray()
+    const foodData = await mongoose.connection.db.collection("foodData2").find({}).toArray()
+
+    if(!category || !foodData){
+        res.status(400)
+            throw new Error("There is no category")
+    }
+    
+    res.status(200).json({
+        category, 
+        foodData
+    })
+
+   
+});
+
+
+
+
+
+
+
+module.exports = foodCategory
+
+
