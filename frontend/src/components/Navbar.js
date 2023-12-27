@@ -5,7 +5,7 @@ import Modal from "../Modal";
 import Cart from "../screens/Cart";
 import { useCart } from "./ContextReducer";
 
-const Navbar = () => {
+const Navbar = (props) => {
    
   const [cartView, setCartView] = useState(false);
   let data = useCart()

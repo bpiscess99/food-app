@@ -41,17 +41,24 @@ const Card = (props) => {
           qty: qty,
           size: size
         })
+        return
       }
-      
       // console.log(data)
     }
+      await dispatch({
+        type: "ADD", 
+        id:props.foodItem._id, 
+        name:props.foodItem.name,
+        price:finalPrice,
+        qty: qty,
+        size: size})
     
   }
   // final price 
   let finalPrice = size ? qty * parseInt(options[size]): 0;
   useEffect(() => {
-  setSize(priceOptions[0])
-  }, [priceOptions])
+  setSize(priceRef.current.value)
+  }, [])
 
   return (
        <div>
