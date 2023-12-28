@@ -1,29 +1,65 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useCart, useDispatchCart } from './ContextReducer';
+
+
 const Card = (props) => {
+ 
   let dispatch = useDispatchCart()
   let data = useCart();
   const priceRef = useRef()
   let options = props.options; 
   let priceOptions = Object.keys(options) // because option is in database value in 0
+  
   const [qty, setQty] = useState(1)
   const [size, setSize] = useState("")
+  
   const handleAddToCart = async () => {
-    await dispatch({
-      type: "ADD", 
-      id:props.foodItem._id, 
-      name:props.foodItem.name,
-      price:finalPrice,
-      qty: qty,
-      size: size
-    })
-    console.log(data)
+    let food = [];
+    for(const item of data){
+      if(item.id === props.foodItem._id){
+        food = item;
+
+        break;
+      }
+    }
+
+    if(food != []){
+      if(food.size === size){
+        await dispatch({
+          type: "UPDATE",
+          id: props.foodItem._id,
+          price: finalPrice,
+          qty: qty
+        })
+        return
+      }else if(food.size === size){
+        await dispatch({
+          type: "ADD", 
+          id:props.foodItem._id, 
+          name:props.foodItem.name,
+          price:finalPrice,
+          qty: qty,
+          size: size
+        })
+        return
+      }
+      // console.log(data)
+    }
+      await dispatch({
+        type: "ADD", 
+        id:props.foodItem._id, 
+        name:props.foodItem.name,
+        price:finalPrice,
+        qty: qty,
+        size: size})
+    
   }
   // final price 
-  let finalPrice = qty * parseInt(options[size]);
+  let finalPrice = size ? qty * parseInt(options[size]): 0;
   useEffect(() => {
   setSize(priceRef.current.value)
   }, [])
+
   return (
        <div>
       <div className="card mt-3" style={{"width": "16rem", "maxHeight": "36rem"}}>
@@ -32,7 +68,7 @@ const Card = (props) => {
           <h5 className="card-title">{props.foodItem.name}</h5>
           <div className="container w-100">
             <select className="m-2 h-100 rounded" 
-            onChange={(e) => setQty(e.target.value)}
+            onChange={(e) => setQty(parseInt(e.target.value))}
             style={{"background" : "green"}} >
               {Array.from(Array(6), (e,i) =>{
                 return(
