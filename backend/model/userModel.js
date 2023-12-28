@@ -20,7 +20,9 @@ const userSchema = mongoose.Schema({
         match: [
          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
          "Please enter a valid email" // regex for validation of email     
-      ]
+      ],
+        required: true
+
      },
 
      password: {
@@ -33,25 +35,30 @@ const userSchema = mongoose.Schema({
         type: Date,
         default: Date.now
      },
+
+       
 }, {
     timestamps: true,
 }
 );
 
-// Encrypt password before saving to db
-userSchema.pre("save", async function(next){
-   if(!this.isModified("password")){
-      return next()
-   }
+
+// Encrypt Password
+userSchema.pre("save", async function (next){
+if(!this.isModified("password")){
+   return next()
+}
 
 
-// Hash Password
+// Hash password
+
 const salt = await bcrypt.genSalt(10);
 const hashedPassword = await bcrypt.hash(this.password, salt);
 this.password = hashedPassword;
 next()
+
 });
 
 
-const User = mongoose.model("User", userSchema)
+const User = mongoose.model("user", userSchema)
 module.exports = User;

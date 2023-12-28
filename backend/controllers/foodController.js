@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
 
+
 // Get food categories
 const foodCategory = asyncHandler(async(req, res) => {
     const category = await mongoose.connection.db.collection("foodCategory").find({}).toArray();
@@ -15,6 +16,10 @@ const foodCategory = asyncHandler(async(req, res) => {
         category,
         foodData
     })
+
+
+   
+
 });
 
 
@@ -22,4 +27,9 @@ const foodCategory = asyncHandler(async(req, res) => {
 
 
 
+
+
 module.exports = foodCategory
+
+
+

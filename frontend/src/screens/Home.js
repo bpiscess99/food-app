@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Card from "../components/Card";
-import axios from "axios"
+import axios from "axios";
 
 const Home = () => {
   const [foodCat, setFoodCat] = useState([]);
@@ -136,8 +136,8 @@ const Home = () => {
                           <div key={items._id} className="col-12 col-md-6 col-lg-3">
                             <Card foodItem={items}
                             options={items.options[0]}
-                            
-                            ></Card>
+                            >
+                            </Card>
                           </div>
                         );
                       })

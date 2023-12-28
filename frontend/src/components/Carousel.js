@@ -3,15 +3,15 @@ import React from "react";
 const Carousel = () => {
   return (
     <div>
-
-<div>
+      <div>
         <div
           id="carouselExampleFade"
           className="carousel slide carousel-fade"
-          data-bs-ride="carousel" style={{objectFit: "contain !important "}}
+          data-bs-ride="carousel"
+          style={{ objectFit: "contain !important " }}
         >
           <div className="carousel-inner" id="carousel">
-            <div className="carousel-caption" style={{zIndex:"10"}}>
+            <div className="carousel-caption" style={{ zIndex: "10" }}>
               <form className="d-flex">
                 <input
                   className="form-control me-2"
@@ -19,7 +19,10 @@ const Carousel = () => {
                   placeholder="Search"
                   aria-label="Search"
                 />
-                <button className="btn btn-outline-success text-white bg-success" type="submit">
+                <button
+                  className="btn btn-outline-success text-white bg-success"
+                  type="submit"
+                >
                   Search
                 </button>
               </form>
@@ -29,7 +32,7 @@ const Carousel = () => {
               <img
                 src="https://source.unsplash.com/random/900*700/?burger"
                 className="d-block w-100"
-                style={{ filter: "brightness(30%)"}}
+                style={{ filter: "brightness(30%)" }}
                 alt="..."
               />
             </div>
@@ -78,12 +81,8 @@ const Carousel = () => {
           </button>
         </div>
       </div>
-      </div>
+    </div>
+  );
+};
 
-
-  )
-}
-
-export default Carousel
-
-      
+export default Carousel;

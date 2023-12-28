@@ -3,17 +3,20 @@ const asyncHandler = require("express-async-handler");
 
 
 const orderFood = asyncHandler(async (req, res) => {
+
     console.log("request Data:", req.body)
    const {order_data, order_date, email} = req.body;
 
    order_data.splice(0, 0, {order_date: order_date, ...order_data});
 
 //    validation
-   if(!email || !order_data || order_date || email === null){
+   if(!email || !order_data || order_date){
+
     res.status(400)
     throw new Error("Please provide all required fields")
    }
     
+
 // if email already exist
 const existingOrder = await Order.findOne({email}) 
 
@@ -58,4 +61,7 @@ if(existingOrder){
 });
 
 
+
+
 module.exports = orderFood
+

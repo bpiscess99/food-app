@@ -34,7 +34,6 @@ const Cart = () => {
       }
       
     }
-
     let totalPrice = data.reduce((total, food) => total + food.price, 0)
 
   return (
@@ -77,5 +76,6 @@ const Cart = () => {
   </div>
   )
 }
+
 
 export default Cart

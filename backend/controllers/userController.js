@@ -1,5 +1,6 @@
 const User = require("../model/userModel");
 const asyncHandler = require("express-async-handler");
+
 const bcrypt = require("bcryptjs");
 // const Token = require("../model/tokenModel");
 const jwt = require("jsonwebtoken");
@@ -13,7 +14,9 @@ const generateToken = (id) =>{
 const registerUser = asyncHandler(async(req, res) => {
     const {name, email, password, location} = req.body;
 
-// Validation
+
+//   validation
+
 if(!name || !email || !password || !location){
     res.status(400);
     throw new Error("Please fill all required field")
@@ -26,6 +29,7 @@ if(userExists){
     throw new Error("User email already exist")
 }
 
+
 // Create new user
 const user = await User.create({
     name,
@@ -34,7 +38,9 @@ const user = await User.create({
     location,
 });
 
+
 // Generate a Token
+
 const token = generateToken(user._id);
 
 // Send HTTP-only cookie    
@@ -45,6 +51,9 @@ res.cookie("token", token, {
     sameSite: "none",
     secure: true, 
 })
+
+
+
 if(user){
     const {_id, name, email, location} = user;
     res.status(201).json({
@@ -53,6 +62,7 @@ if(user){
         email,
         location,
         token
+
     });
 }else{
     res.status(400)
@@ -60,13 +70,18 @@ if(user){
 }
 });
 
-// Login User
+
+ 
+
+// loginUser
+
 const loginUser = asyncHandler(async(req, res) => {
     const {email, password} = req.body;
 
     // Validation
     if(!email || !password){
         res.status(400);
+
         throw new Error("Please fill all required field");
     };
 
@@ -132,3 +147,4 @@ module.exports={
     loginUser,
     getUser,
 }
+
