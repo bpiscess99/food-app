@@ -29,6 +29,7 @@ const Login = () => {
         formData
       );
       console.log("Login Successfully", response.data);
+      localStorage.setItem("userEmail", response.email)
       localStorage.setItem("token", response.data.token)
       console.log("successfully got", localStorage.getItem("token"))
       navigate("/")
