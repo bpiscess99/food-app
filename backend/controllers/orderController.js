@@ -3,15 +3,39 @@ const asyncHandler = require("express-async-handler");
 
 
 const orderFood = asyncHandler(async (req, res) => {
-   const {order_data, order_date, email} = req.body;
+try {
+   let data = req.body.order_data;
+   data.unshift({ Order_date: req.body.order_date }); // Add Order_date at the beginning
 
-//    validation
-   if(!email || !order_data || order_date){
-    res.status(400)
-    throw new Error("Please provide all required fields")
-   }
-    
-})
+   const updatedOrder = await Order.findOneAndUpdate(
+       { email: req.body.email },
+       { $push: { order_data: data } },
+       { upsert: true, new: true }
+   );
+
+   res.json({ success: true, order: updatedOrder });
+} catch (error) {
+   console.error(error.message);
+   res.status(500).send("Server Error: " + error.message);
+}
+});
 
 
-module.exports = orderFood
+const myOrderFood = asyncHandler(async(req, res) => {
+    const {email} = req.body;
+    const orderData = await Order.findOne({email})
+
+    if(!orderData){
+      res.status(400)
+      throw new Error("No Order found")
+    }else{
+      res.json({orderData, message: "Order Data received"})
+    }
+});
+
+
+
+module.exports = {
+   orderFood,
+   myOrderFood
+}

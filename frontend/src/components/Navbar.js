@@ -45,7 +45,7 @@ const Navbar = (props) => {
               </li>
               {(localStorage.getItem("token")) ?
               <li className="nav-item">
-              <Link className="nav-link active fs-5" aria-current="page" to="/">
+              <Link className="nav-link active fs-5" aria-current="page" to="/myOrder">
                 My Orders
               </Link>
             </li>
