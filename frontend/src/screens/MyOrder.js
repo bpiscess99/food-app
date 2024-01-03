@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import axios from "axios";
+import {toast} from 'react-toastify';
 
 const MyOrder = () => {
   const [orderData, setOrderData] = useState({});
@@ -15,6 +16,7 @@ const MyOrder = () => {
         }
       );
       setOrderData(response.data);
+      toast.success("Your Placed Orders")
     } catch (error) {
       console.error("Error Fetching order:", error);
     }
@@ -39,12 +41,12 @@ const MyOrder = () => {
                     className="card mt-3"
                     style={{ width: "16rem", maxHeight: "360px" }}
                   >
-                    <img
+                    {/* <img
                       src={arrayData.img}
                       className="card-img-top"
                       alt="..."
                       style={{ height: "120px", objectFit: "fill" }}
-                    />
+                    /> */}
                     <div className="card-body">
                       <h5 className="card-title">{arrayData.name}</h5>
                       <div

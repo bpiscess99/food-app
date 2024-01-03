@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {toast} from 'react-toastify'
 
 const initialState = {
   email: "",
@@ -29,6 +30,7 @@ const Login = () => {
         formData
       );
       console.log("Login Successfully", response.data);
+      toast.success("Login Successfully")
       localStorage.setItem("userEmail", response.data.email)
       localStorage.setItem("token", response.data.token)
       console.log("successfully got", localStorage.getItem("token"))

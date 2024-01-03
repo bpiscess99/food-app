@@ -1,7 +1,8 @@
 import React from 'react';
 import { useCart, useDispatchCart } from '../components/ContextReducer';
 import { RiDeleteBinLine } from "react-icons/ri";
-import axios from 'axios'
+import axios from 'axios';
+import {toast} from 'react-toastify'
 
 const Cart = () => {
 
@@ -27,6 +28,7 @@ const Cart = () => {
         });
   
         console.log("JSON RESPONSE::::", response.data);  
+        toast.success("Order Placed")
         if(response.status === 200){
           dispatch({type: "DROP"})
         }

@@ -8,6 +8,8 @@ import '../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
 import Signup from "./screens/Signup.js";
 import { CartProvider } from "./components/ContextReducer.js";
 import MyOrder from "./screens/MyOrder.js";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -22,6 +24,7 @@ function App() {
           </Routes>
         </div>
       </Router>
+      <ToastContainer/>
     </CartProvider>
   );
 }
