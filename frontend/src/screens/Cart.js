@@ -1,43 +1,44 @@
 import React from 'react';
-import { useCart, useDispatchCart } from '../components/ContextReducer';
+import { useSelector, useDispatch } from 'react-redux';
+import { remove, drop } from '../redux/slices/cartSlice';
 import { RiDeleteBinLine } from "react-icons/ri";
 import axios from 'axios';
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify';
 
 const Cart = () => {
 
-    let data = useCart();
-    let dispatch = useDispatchCart();
-
-    if(data.length === 0){
-        return(
-            <div>
-                <div className='m-5 w-100 text-center fs-3'>The Cart is Empty!</div>
-            </div>
-        )
-    };
-
+    const data = useSelector((state) => state.cart);
+    const dispatch = useDispatch();
+  
+    if (data.length === 0) {
+      return (
+        <div>
+          <div className='m-5 w-100 text-center fs-3'>The Cart is Empty!</div>
+        </div>
+      );
+    }
+  
     const handleCheckOut = async () => {
       try {
-        let userEmail =  localStorage.getItem("userEmail");
-        console.log("User Email:", userEmail)
-        let response = await axios.post("http://localhost:5000/api/orders/foodData",{
-          order_data : data,
+        const userEmail = localStorage.getItem("userEmail");
+        console.log("User Email:", userEmail);
+        const response = await axios.post("http://localhost:5000/api/orders/foodData", {
+          order_data: data,
           email: userEmail,
           order_date: new Date().toDateString()
         });
   
-        console.log("JSON RESPONSE::::", response.data);  
-        toast.success("Order Placed")
-        if(response.status === 200){
-          dispatch({type: "DROP"})
+        console.log("JSON RESPONSE::::", response.data);
+        toast.success("Order Placed");
+        if (response.status === 200) {
+          dispatch(drop());
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
-
-    let totalPrice = data.reduce((total, food) => total + food.price, 0)
+    };
+  
+    const totalPrice = data.reduce((total, food) => total + food.price, 0);
 
   return (
     <div>
@@ -63,7 +64,7 @@ const Cart = () => {
               <td>{food.size}</td>
               <td>{food.price}</td>
               <td ><button type="button" className="btn p-0">
-              <RiDeleteBinLine onClick={() => { dispatch({ type: "REMOVE", index: index }) }}/>
+              <RiDeleteBinLine onClick={() => { dispatch(remove(index))}}/>
               </button> </td></tr>
           ))}
         </tbody>

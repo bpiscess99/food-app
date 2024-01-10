@@ -3,18 +3,20 @@ import { Link, useNavigate } from "react-router-dom";
 import Badge from 'react-bootstrap/Badge';
 import Modal from "../Modal";
 import Cart from "../screens/Cart";
-import { useCart } from "./ContextReducer";
+import {useSelector, useDispatch} from 'react-redux'
+import {remove} from '../redux/slices/cartSlice'
 
 const Navbar = (props) => {
    
   const [cartView, setCartView] = useState(false);
-  let data = useCart()
-  
-  const navigate = useNavigate()
+  const data = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleLogOut = () => {
-    localStorage.removeItem("token")
-    navigate("/login")
-  }
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
   return (
     <div>
       <nav
@@ -72,7 +74,11 @@ const Navbar = (props) => {
             </button> 
             {cartView ? <Modal onClose={() => setCartView(false)}><Cart/></Modal> : null}
 
-            <button className="mx-2 fs-5" onClick={handleLogOut}
+            <button className="mx-2 fs-5" 
+            onClick={() => {
+              handleLogOut()
+              dispatch(remove({index: 0}))
+            }}
             style={{background: "white", color: "red", borderRadius: "1.5rem"}}
             >
               Logout
