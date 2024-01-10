@@ -3,6 +3,7 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import {toast} from 'react-toastify';
+import { URL } from "../App";
 
 const MyOrder = () => {
   const [orderData, setOrderData] = useState({});
@@ -10,7 +11,7 @@ const MyOrder = () => {
   const fetchOrder = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/orders/myOrder",
+        `${URL}/api/orders/myOrder`,
         {
           email: localStorage.getItem("userEmail"),
         }

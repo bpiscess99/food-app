@@ -4,6 +4,8 @@ import { remove, drop } from '../redux/slices/cartSlice';
 import { RiDeleteBinLine } from "react-icons/ri";
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { URL } from '../App';
+
 
 const Cart = () => {
 
@@ -22,7 +24,7 @@ const Cart = () => {
       try {
         const userEmail = localStorage.getItem("userEmail");
         console.log("User Email:", userEmail);
-        const response = await axios.post("http://localhost:5000/api/orders/foodData", {
+        const response = await axios.post(`${URL}http://localhost:5000/api/orders/foodData`, {
           order_data: data,
           email: userEmail,
           order_date: new Date().toDateString()
