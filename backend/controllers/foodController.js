@@ -20,12 +20,6 @@ const foodCategory = asyncHandler(async(req, res) => {
 });
 
 
-
-
-
-
-
-
 module.exports = foodCategory
 
 

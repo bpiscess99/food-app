@@ -6,12 +6,17 @@ import '../node_modules/bootstrap-dark-5/dist/css/bootstrap-night.min.css';
 import '../node_modules/bootstrap/dist/js/bootstrap.bundle';
 import '../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
 import Signup from "./screens/Signup.js";
-import { CartProvider } from "./components/ContextReducer.js";
 import MyOrder from "./screens/MyOrder.js";
+import MyOrder from "./screens/MyOrder.js";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+export const URL = process.env.REACT_APP_SERVER_URL
+
 
 function App() {
   return (
-    <CartProvider>
+    <>
       <Router>
         <div>
           <Routes>
@@ -22,7 +27,8 @@ function App() {
           </Routes>
         </div>
       </Router>
-    </CartProvider>
+      <ToastContainer/>
+    </>
   );
 }
 

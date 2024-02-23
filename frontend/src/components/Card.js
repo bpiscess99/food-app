@@ -1,64 +1,48 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useCart, useDispatchCart } from './ContextReducer';
+import { useSelector, useDispatch } from 'react-redux';
+import { add, update } from '../redux/slices/cartSlice';
 
 
 const Card = (props) => {
  
-  let dispatch = useDispatchCart()
-  let data = useCart();
-  const priceRef = useRef()
-  let options = props.options; 
-  let priceOptions = Object.keys(options) // because option is in database value in 0
-  
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart);
+  const priceRef = useRef();
+  const options = props.options;
+  const priceOptions = Object.keys(options);
+
   const [qty, setQty] = useState(1)
   const [size, setSize] = useState("")
-  
+
   const handleAddToCart = async () => {
-    let food = [];
-    for(const item of data){
-      if(item.id === props.foodItem._id){
-        food = item;
+    const existingItem = cart.find((item) => item.id === props.foodItem._id);
 
-        break;
-      }
-    }
+    if (existingItem) {
+      const updatedItem = {
+        ...existingItem,
+        qty: existingItem.qty + qty,
+        price: existingItem.price + qty * parseInt(options[size]),
+      };
 
-    if(food != []){
-      if(food.size === size){
-        await dispatch({
-          type: "UPDATE",
+      dispatch(update({ id: props.foodItem._id, updatedItem }));
+    } else {
+      dispatch(
+        add({
           id: props.foodItem._id,
-          price: finalPrice,
-          qty: qty
+          name: props.foodItem.name,
+          price: qty * parseInt(options[size]),
+          qty,
+          size,
         })
-        return
-      }else if(food.size === size){
-        await dispatch({
-          type: "ADD", 
-          id:props.foodItem._id, 
-          name:props.foodItem.name,
-          price:finalPrice,
-          qty: qty,
-          size: size
-        })
-        return
-      }
-      // console.log(data)
+      );
     }
-      await dispatch({
-        type: "ADD", 
-        id:props.foodItem._id, 
-        name:props.foodItem.name,
-        price:finalPrice,
-        qty: qty,
-        size: size})
-    
-  }
-  // final price 
-  let finalPrice = size ? qty * parseInt(options[size]): 0;
+  };
+
+  const finalPrice = qty * parseInt(options[size]);
+
   useEffect(() => {
-  setSize(priceRef.current.value)
-  }, [])
+    setSize(priceRef.current.value);
+  }, [size]); // Update size when the size changes
 
   return (
        <div>

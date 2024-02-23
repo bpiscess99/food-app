@@ -2,9 +2,12 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "Server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node backend/Server.js",
+    "backend": "nodemon backend/Server.js",
+    "frontend": "npm start --prefix frontend",
+    "both": "concurrently \"npm run backend\"\"npm run frontend\""
   },
   "keywords": [],
   "author": "",
@@ -19,5 +22,8 @@
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.3"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }

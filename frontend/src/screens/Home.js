@@ -3,6 +3,8 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Card from "../components/Card";
 import axios from "axios";
+import { URL } from "../App";
+
 
 const Home = () => {
   const [foodCat, setFoodCat] = useState([]);
@@ -12,7 +14,7 @@ const Home = () => {
   const loadData = async () => {
     try {
       let response = await axios.post(
-        "http://localhost:5000/api/foods/fooddata"
+        `${URL}/api/foods/fooddata`
       );
       // console.log("API response", response.data);
       const { category, foodData } = response.data;
