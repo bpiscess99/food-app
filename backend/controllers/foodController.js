@@ -17,9 +17,6 @@ const foodCategory = asyncHandler(async(req, res) => {
         foodData
     })
 
-
-   
-
 });
 
 

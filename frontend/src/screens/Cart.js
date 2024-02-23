@@ -1,7 +1,7 @@
 import React from 'react';
 import { useCart, useDispatchCart } from '../components/ContextReducer';
 import { RiDeleteBinLine } from "react-icons/ri";
-import axios from 'axios';
+import axios from 'axios'
 
 const Cart = () => {
 
@@ -16,24 +16,25 @@ const Cart = () => {
         )
     };
 
-    const handleCheckOut = async() => {
+    const handleCheckOut = async () => {
       try {
-        let userEmail = localStorage.getItem("userEmail");
-        let response = await axios.post("http://localhost:5000/api/orders/orderData",{
+        let userEmail =  localStorage.getItem("userEmail");
+        console.log("User Email:", userEmail)
+        let response = await axios.post("http://localhost:5000/api/orders/foodData",{
           order_data : data,
           email: userEmail,
           order_date: new Date().toDateString()
         });
   
-        if(response.status === 200){
         console.log("JSON RESPONSE::::", response.data);  
+        if(response.status === 200){
           dispatch({type: "DROP"})
         }
       } catch (error) {
         console.log(error)
       }
-      
     }
+
     let totalPrice = data.reduce((total, food) => total + food.price, 0)
 
   return (
@@ -76,6 +77,5 @@ const Cart = () => {
   </div>
   )
 }
-
 
 export default Cart

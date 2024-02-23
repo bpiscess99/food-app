@@ -31,8 +31,6 @@ app.get('/', (req, res) => {
 })
 
 // Connected to DB and start the server
-
-
 const Port = process.env.PORT || 5000;
 
 mongoose

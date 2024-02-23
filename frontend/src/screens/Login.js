@@ -28,11 +28,8 @@ const Login = () => {
         "http://localhost:5000/api/users/login",
         formData
       );
-
-      console.log("Registered Successfully", response.data);
-
       console.log("Login Successfully", response.data);
-      localStorage.setItem("userEmail", response.email)
+      localStorage.setItem("userEmail", response.data.email)
       localStorage.setItem("token", response.data.token)
       console.log("successfully got", localStorage.getItem("token"))
       navigate("/")
@@ -84,6 +81,5 @@ const Login = () => {
     </>
   );
 };
-
 
 export default Login;
