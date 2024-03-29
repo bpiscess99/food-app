@@ -7,12 +7,13 @@
     "start": "node backend/Server.js",
     "backend": "nodemon backend/Server.js",
     "frontend": "npm start --prefix frontend",
-    "both": "concurrently \"npm run backend\"\"npm run frontend\""
+    "both": "concurrently \"npm run backend\" \"npm run frontend\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.6.7",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",

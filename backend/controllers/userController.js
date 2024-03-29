@@ -1,8 +1,6 @@
 const User = require("../model/userModel");
 const asyncHandler = require("express-async-handler");
-
 const bcrypt = require("bcryptjs");
-// const Token = require("../model/tokenModel");
 const jwt = require("jsonwebtoken");
 
 
@@ -16,7 +14,6 @@ const registerUser = asyncHandler(async(req, res) => {
 
 
 //   validation
-
 if(!name || !email || !password || !location){
     res.status(400);
     throw new Error("Please fill all required field")
@@ -94,6 +91,14 @@ const loginUser = asyncHandler(async(req, res) => {
 
     // check password is correct
     const passwordIsCorrect = await bcrypt.compare(password, user.password);
+
+    // Password Validation
+
+    if(!passwordIsCorrect){
+        res.status(400);
+        throw new Error("Invalid email or password")
+        
+    }
 
     // Generate a token
   const token = generateToken(user._id);

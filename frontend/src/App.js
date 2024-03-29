@@ -7,11 +7,10 @@ import '../node_modules/bootstrap/dist/js/bootstrap.bundle';
 import '../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
 import Signup from "./screens/Signup.js";
 import MyOrder from "./screens/MyOrder.js";
-import MyOrder from "./screens/MyOrder.js";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export const URL = process.env.REACT_APP_SERVER_URL
+export const URL = process.env.REACT_APP_BACKEND_SERVER;
 
 
 function App() {
