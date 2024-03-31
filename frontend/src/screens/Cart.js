@@ -5,6 +5,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { URL } from '../App';
+import {loadStripe} from '@stripe/stripe-js';
 
 
 const Cart = () => {
@@ -21,6 +22,28 @@ const Cart = () => {
     }
   
     const handleCheckOut = async () => {
+
+      const stripe = await loadStripe('pk_test_51NWgMnExICbPENGVQa4fSOLrdgVXUzKzTRdON9TUaVwSZejWNQLoN32tqT8OIBmucwpyKWo2bEyDyh7gQsdXbyfe00i1Lh6Juh');
+      try {
+        const userEmail = localStorage.getItem('userEmail');
+        const response = await axios.post(`${URL}/api/payment/create-checkout-session`,{
+          products: data,
+          email: userEmail,
+          orderDate: new Date().toDateString()
+        });
+        const sessionId = response.data.sessionId;
+        const {error} = await stripe.redirectToCheckout({
+          sessionId: sessionId // this session.id will come from backend API
+        });
+        if(error){
+          console.log("Error redirecting to checkout:", error)
+          toast.error("Error redirecting to checkout:", error)
+        } 
+      } catch (error) {
+        console.log(error)
+        toast.error("Error redirecting to checkout:", error)
+      }
+      
       try {
         const userEmail = localStorage.getItem("userEmail");
         console.log("User Email:", userEmail);
@@ -28,9 +51,9 @@ const Cart = () => {
           order_data: data,
           email: userEmail,
           order_date: new Date().toDateString()
-        });
-  
-        console.log("JSON RESPONSE::::", response.data);
+        }); 
+        
+        console.log("JSON RESPONSE:", response.data);
         toast.success("Order Placed");
         if (response.status === 200) {
           dispatch(drop());
@@ -38,6 +61,7 @@ const Cart = () => {
       } catch (error) {
         console.log(error);
       }
+      
     };
   
     const totalPrice = data.reduce((total, food) => total + food.price, 0);

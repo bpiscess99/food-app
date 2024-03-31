@@ -5,7 +5,7 @@ import axios from "axios";
 import {toast} from 'react-toastify';
 import { URL } from "../App";
 
-const MyOrder = (props) => {
+const MyOrder = () => {
   const [orderData, setOrderData] = useState({});
 
   const fetchOrder = async () => {
