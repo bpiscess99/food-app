@@ -9,8 +9,11 @@ import Signup from "./screens/Signup.js";
 import MyOrder from "./screens/MyOrder.js";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Success from "./components/Success.js";
+import Cancel from "./components/Cancel.js";
 
-export const URL = process.env.REACT_APP_SERVER_URL
+export const URL = process.env.REACT_APP_BACKEND_SERVER;
+
 
 function App() {
   return (
@@ -19,9 +22,11 @@ function App() {
         <div>
           <Routes>
             <Route exact path="/" element={<Home />} />
-            <Route exact path="/register" element={<Signup />} />
             <Route exact path="/login" element={<Login />} />
+            <Route exact path="/register" element={<Signup />} />
             <Route exact path="/myOrder" element={<MyOrder />} />
+            <Route exact path="/success" element={<Success />} />
+            <Route exact path="/cancel" element={<Cancel/>} />
           </Routes>
         </div>
       </Router>

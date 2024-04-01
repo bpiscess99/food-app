@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+
 import axios from 'axios';
 import {toast} from 'react-toastify' ;
 import { URL } from '../App';
@@ -12,7 +13,9 @@ const initialState = {
 }
 const Signup = () => {
 
+
   const navigate = useNavigate()
+
     const [formData, setFormData] = useState(initialState);
     const{name, email, password, location} = formData;
 
@@ -31,6 +34,7 @@ const Signup = () => {
     console.log("Registered Successfully", response.data)
     toast.success("Registered Successfully")
     navigate("/login")
+
    } catch (error) {
     console.log(error);
    }

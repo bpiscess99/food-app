@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Card from "../components/Card";
 import axios from "axios";
-import { URL } from "../App";
+import {URL} from "../App";
 
 
 const Home = () => {
