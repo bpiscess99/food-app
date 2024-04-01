@@ -4,12 +4,12 @@ const asyncHandler = require("express-async-handler");
 
 const orderFood = asyncHandler(async (req, res) => {
 try {
-   let data = req.body.order_data;
-   data.unshift({ Order_date: req.body.order_date }); // Add Order_date at the beginning
+   let data = req.body
+   data.unshift({ OrderDate: req.body }); // Add Order_date at the beginning
 
    const updatedOrder = await Order.findOneAndUpdate(
        { email: req.body.email },
-       { $push: { order_data: data } },
+       { $push: { products: data } },
        { upsert: true, new: true }
    );
 

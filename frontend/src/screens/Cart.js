@@ -126,33 +126,38 @@ const Cart = () => {
           orderDate: new Date().toDateString()
         });
         const sessionId = response.data.sessionId;
-        const {error} = await stripe.redirectToCheckout({
+        const result = await stripe.redirectToCheckout({
           sessionId: sessionId // this session.id will come from backend API
         });
-        if(error){
-          console.log("Error redirecting to checkout:", error)
-          toast.error("Error redirecting to checkout:", error)
+        if(result.error){
+          console.log("Error redirecting to checkout:", result.error)
+          toast.error("Error redirecting to checkout:", result.error)
           return;
-        }
-      if(response.status === 200){
-        console.log("Redirect to Stripe checkout successfully")
-              console.log("Saving Order....")
-              // const userEmail = localStorage.getItem("userEmail");
-              // console.log("User Email:", userEmail); 
-              const savedResponse = await axios.post(`${URL}/api/orders/foodData`, 
-              {
-                order_data: data,
-                email: userEmail,
-                order_date: new Date().toDateString()
-              }); 
-              
-              console.log("Order Saved:", savedResponse.data);
-              toast.success("Order Placed");
+        }else{
+          try {
+            console.log("Redirect to Stripe checkout successfully")
+            console.log("Saving Order....")
+            const userEmail = localStorage.getItem("userEmail");
+            // console.log("User Email:", userEmail); 
+            const savedResponse = await axios.post(`${URL}/api/orders/foodData`, 
+            {
+              products: data,
+              email: userEmail,
+              orderDate: new Date().toDateString()
+            }); 
+            
+            console.log("Order Saved:", savedResponse.data);
+            toast.success("Order Placed");
 
-              if (savedResponse.status === 200) {
-                dispatch(drop());
-              }
+            if (savedResponse.status === 200) {
+              dispatch(drop());
             }
+          } catch (error) {
+            console.log(error)
+            toast.error("Saved Product error:", error)
+          }
+        }
+       
           } catch (error) {
             console.log(error)
             toast.error("Error redirecting to checkout:", error)
