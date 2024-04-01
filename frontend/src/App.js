@@ -13,6 +13,7 @@ import Success from "./components/Success.js";
 import Cancel from "./components/Cancel.js";
 
 export const URL = process.env.REACT_APP_BACKEND_SERVER;
+// console.log("URL", URL)
 
 
 function App() {
