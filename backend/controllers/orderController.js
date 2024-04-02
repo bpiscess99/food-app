@@ -4,8 +4,8 @@ const asyncHandler = require("express-async-handler");
 // order saved in database
 const orderFood = asyncHandler(async (req, res) => {
 try {
-   let data = req.body
-   data.unshift({ Order_date: req.body }); // Add Order_date at the beginning
+   let data = req.body.order_data;
+   data.unshift({ order_date: req.body.order_date }); // Add Order_date at the beginning
 
    const updatedOrder = await Order.findOneAndUpdate(
        { email: req.body.email },

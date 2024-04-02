@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const Order = require("../model/orderModel");
+
 const stripe = require("stripe")("sk_test_51NWgMnExICbPENGVoWn49q0OL0WHnEdxarNVdR5ihco6gNCP68vlBr88zXx72YvoknJybThXBqhuBXJI7f4uRJOo00g0OYw8bx")
 
 // Stripe Integration
@@ -9,7 +9,7 @@ const stripeIntegration = asyncHandler(async (req, res) => {
     const lineItems = products.map((product) => ({
         price_data: {
             currency: "usd",
-            order_data: {
+            product_data: {
                 name: product.name,
             },
             unit_amount: product.price * 100,
