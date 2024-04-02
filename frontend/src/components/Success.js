@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Success = () => {
+
   return (
     <div>
     <h2>Payment Successful Received!</h2>
@@ -13,6 +14,7 @@ const Success = () => {
     <button style={{borderRadius: ".8rem", marginTop: "15px", backgroundColor: "yellowgreen", font: "bold"}}>
     <Link to="/" style={{"color" : "white", textDecoration: "none"}}>Continue Shopping</Link>
     </button>
+
     </div>
   )
 }

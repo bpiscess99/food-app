@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler");
+const Order = require("../model/orderModel");
 const stripe = require("stripe")("sk_test_51NWgMnExICbPENGVoWn49q0OL0WHnEdxarNVdR5ihco6gNCP68vlBr88zXx72YvoknJybThXBqhuBXJI7f4uRJOo00g0OYw8bx")
 
 // Stripe Integration
@@ -8,7 +9,7 @@ const stripeIntegration = asyncHandler(async (req, res) => {
     const lineItems = products.map((product) => ({
         price_data: {
             currency: "usd",
-            product_data: {
+            order_data: {
                 name: product.name,
             },
             unit_amount: product.price * 100,
@@ -19,6 +20,8 @@ const stripeIntegration = asyncHandler(async (req, res) => {
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
+    //   success_url: `${req.headers.origin}/success`,
+    //   cancel_url: `${req.headers.origin}/cancel`,
       success_url:"http://localhost:3000/success",
       cancel_url:"http://localhost:3000/cancel",   
     })
@@ -26,4 +29,9 @@ const stripeIntegration = asyncHandler(async (req, res) => {
 });
 
 
-module.exports = stripeIntegration;
+
+
+module.exports = {
+    stripeIntegration,
+
+};

@@ -1,15 +1,15 @@
 const Order = require("../model/orderModel");
 const asyncHandler = require("express-async-handler");
 
-
+// order saved in database
 const orderFood = asyncHandler(async (req, res) => {
 try {
    let data = req.body
-   data.unshift({ OrderDate: req.body }); // Add Order_date at the beginning
+   data.unshift({ Order_date: req.body }); // Add Order_date at the beginning
 
    const updatedOrder = await Order.findOneAndUpdate(
        { email: req.body.email },
-       { $push: { products: data } },
+       { $push: { order_data: data } },
        { upsert: true, new: true }
    );
 
@@ -21,6 +21,7 @@ try {
 });
 
 
+// get placed order from database
 const myOrderFood = asyncHandler(async(req, res) => {
     const {email} = req.body;
     const orderData = await Order.findOne({email})
@@ -29,7 +30,7 @@ const myOrderFood = asyncHandler(async(req, res) => {
       res.status(400)
       throw new Error("No Order found")
     }else{
-      res.json({orderData, message: "Order Data received"})
+      res.json({"Order Data received": orderData})
     }
 });
 
