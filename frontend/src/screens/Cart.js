@@ -21,48 +21,6 @@ const Cart = () => {
       );
     }
   
-  // const handleCheckOut = async () => {
-  //      try {
-  //       const stripe = await loadStripe('pk_test_51NWgMnExICbPENGVQa4fSOLrdgVXUzKzTRdON9TUaVwSZejWNQLoN32tqT8OIBmucwpyKWo2bEyDyh7gQsdXbyfe00i1Lh6Juh');
-  //       const userEmail = localStorage.getItem('userEmail');
-  //       const response = await axios.post(`${URL}/api/payment/create-checkout-session`,{
-  //         products: data,
-  //         email: userEmail,
-  //         orderDate: new Date().toDateString()
-  //       });
-  //       const sessionId = response.data.sessionId;
-  //       const result = await stripe.redirectToCheckout({
-  //         sessionId: sessionId // this sessionId will come from backend API
-  //       });
-  //       if(result.error){
-  //         console.log("Error redirecting to checkout:", result.error)
-  //         toast.error("Error redirecting to checkout:", result.error)
-  //       }else{
-  //               try {
-  //       const userEmail = localStorage.getItem("userEmail");
-  //       // console.log("User Email:", userEmail); 
-  //       const response = await axios.post(`${URL}/api/orders/foodData`, {
-  //         order_data: data,
-  //         email: userEmail,
-  //         order_date: new Date().toDateString()
-  //       }); 
-  //       console.log("Order Saved:", response.data);
-  //       console.log("data", response.order_data)
-  //       toast.success("Order Placed");
-  //       if (response.status === 200) {
-  //         dispatch(drop());
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }             
-  //       }
-  //     } catch (error) {
-  //               console.log(error)
-  //               toast.error("Error redirecting to checkout:", error)            
-  //             }                  
-  //             }
-
-
   const handleCheckOut = async () => {
     try {
         const stripe = await loadStripe('pk_test_51NWgMnExICbPENGVQa4fSOLrdgVXUzKzTRdON9TUaVwSZejWNQLoN32tqT8OIBmucwpyKWo2bEyDyh7gQsdXbyfe00i1Lh6Juh');
@@ -94,6 +52,27 @@ const Cart = () => {
         toast.error("Error during checkout:", error);
     }
 };
+
+
+// const handleCheckOut = async () => {
+//   try {
+//     const userEmail = localStorage.getItem("userEmail");
+//     console.log("User Email:", userEmail);
+//     const response = await axios.post(`${URL}/api/orders/foodData`, {
+//       order_data: data,
+//       email: userEmail,
+//       order_date: new Date().toDateString()
+//     });
+
+//     console.log("JSON RESPONSE::::", response.data);
+//     toast.success("Order Placed");
+//     if (response.status === 200) {
+//       dispatch(drop());
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
     const totalPrice = data.reduce((total, food) => total + food.price, 0);
 
