@@ -3,10 +3,10 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import {toast} from 'react-toastify';
-import { URL } from "../App";
+import {URL} from '../App'
 
 const MyOrder = () => {
-  const [orderData, setOrderData] = useState({});
+  const [orderData, setOrderData] = useState([]);
 
   const fetchOrder = async () => {
     try {
@@ -17,6 +17,7 @@ const MyOrder = () => {
         }
       );
       setOrderData(response.data);
+      console.log("Response:", response.data)
       toast.success("Your Placed Orders")
     } catch (error) {
       console.error("Error Fetching order:", error);
@@ -32,7 +33,7 @@ const MyOrder = () => {
       <Navbar />
       <div className="container">
         <div className="row">
-          {orderData?.orderData?.order_data
+          {orderData?.products?.products
             ?.slice(0)
             .reverse()
             .map((item) =>
@@ -42,14 +43,12 @@ const MyOrder = () => {
                     className="card mt-3"
                     style={{ width: "16rem", maxHeight: "360px" }}
                   >
-                    
                     {/* <img
                       src={arrayData.img}
                       className="card-img-top"
                       alt="..."
                       style={{ height: "120px", objectFit: "fill" }}
                     /> */}
-                    
                     <div className="card-body">
                       <h5 className="card-title">{arrayData.name}</h5>
                       <div

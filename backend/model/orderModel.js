@@ -10,7 +10,12 @@ const orderSchema = mongoose.Schema(
      order_data: {
         type: Array,
         required: true,
-     }     
+     },
+     order_date: {
+      type: Date, // Change the type to Date
+      required: true,
+      default: Date.now // Set a default value to the current date
+   }      
 })
 
 

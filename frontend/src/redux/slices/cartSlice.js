@@ -1,4 +1,61 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import authService from "./authService";
+
+
+// register
+export const register = createAsyncThunk(
+    "auth/register",
+    async(userData, thunkAPI) => {
+        try {
+            return await authService.register(userData)
+        } catch (error) {
+            const message =
+            (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+                error.message ||
+                error.toString();
+                return thunkAPI.rejectWithValue(message);
+        }
+    }
+)
+
+// Login
+export const login = createAsyncThunk(
+    "auth/login",
+    async(userData, thunkAPI) => {
+        try {
+            await authService.login(userData)
+        } catch (error) {
+            const message =
+            (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+                error.message ||
+                error.toString();
+                return thunkAPI.rejectWithValue(message);
+        }
+    }
+)
+
+
+// Login With Google
+export const loginWithGoogle = createAsyncThunk(
+    "auth/loginWithGoogle",
+    async(userToken, thunkAPI) => {
+        try {
+            return await authService.loginWithGoogle(userToken);
+        } catch (error) {
+            const message =
+            (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+                error.message ||
+                error.toString();
+                return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
 
 const cartSlice = createSlice({
     name: 'cart',
@@ -27,6 +84,13 @@ const cartSlice = createSlice({
         },
         drop: () => []
     },
+    // extraReducers: (builder) => {
+    //     builder
+    //     // LoginWithGoogle
+    //     .addCase(loginWithGoogle.rejected, (state, action) => {
+    //         state.message
+    //     })
+    // }
 });
 
 export const {add, remove, update, drop} = cartSlice.actions

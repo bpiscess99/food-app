@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
-import axios from 'axios';
+// import axios from 'axios';
 import {toast} from 'react-toastify' ;
-import { URL } from '../App';
+// import { URL } from '../App';
+import {register} from '../redux/slices/cartSlice'
+import {useDispatch} from "react-redux"
 
 const initialState = {
     name: '',
@@ -15,7 +16,7 @@ const Signup = () => {
 
 
   const navigate = useNavigate()
-
+  const dispatch = useDispatch()
     const [formData, setFormData] = useState(initialState);
     const{name, email, password, location} = formData;
 
@@ -29,15 +30,25 @@ const Signup = () => {
    const handleSubmit = async(e) => {
    e.preventDefault();
 
-   try {
-    const response = await axios.post(`${URL}/api/users/register`, formData)
-    console.log("Registered Successfully", response.data)
-    toast.success("Registered Successfully")
-    navigate("/login")
+  //  try {
+  //   const response = await axios.post(`${URL}/api/users/register`, formData)
+  //   console.log("Registered Successfully", response.data)
+  //   toast.success("Registered Successfully")
+  //   navigate("/login")
 
-   } catch (error) {
-    console.log(error);
-   }
+  //  } catch (error) {
+  //   console.log(error);
+  //  }
+  const userData = {
+    name, 
+    email,
+    password,
+    location
+  }
+
+  await dispatch(register(userData));
+  toast.success("User registered");
+  navigate("/login")
    };
 
   return (

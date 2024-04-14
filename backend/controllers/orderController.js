@@ -30,7 +30,7 @@ const myOrderFood = asyncHandler(async(req, res) => {
       res.status(400)
       throw new Error("No Order found")
     }else{
-      res.json({"Order Data received": orderData})
+      res.json({orderData, message: "Order Data received"})
     }
 });
 

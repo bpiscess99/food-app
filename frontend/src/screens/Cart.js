@@ -21,133 +21,59 @@ const Cart = () => {
       );
     }
   
-    // const saveProduct = async () => {
-    //   try {
-    //     const userEmail = localStorage.getItem("userEmail");
-    //     // console.log("User Email:", userEmail); 
-    //     const response = await axios.post(`${URL}/api/orders/foodData`, {
-    //       order_data: data,
-    //       email: userEmail,
-    //       order_date: new Date().toDateString()
-    //     }); 
-    //     console.log("Order Saved:", response.data);
-    //     toast.success("Order Placed");
-    //     if (response.status === 200) {
-    //       dispatch(drop());
-    //     }
-    //   } catch (error) {
-    //     console.log(error);
-    //   }             
-    // }
-
-
-  //   const handleCheckOut = async () => {
-
-  //      // Load Stripe
-  //     const stripe = await loadStripe('pk_test_51NWgMnExICbPENGVQa4fSOLrdgVXUzKzTRdON9TUaVwSZejWNQLoN32tqT8OIBmucwpyKWo2bEyDyh7gQsdXbyfe00i1Lh6Juh');
-  //     try {
-  //      // Get user email from localStorage
-  //       const userEmail = localStorage.getItem('userEmail');
-  //         // Create checkout session
-  //       const response = await axios.post(`${URL}/api/payment/create-checkout-session`,{
-  //         products: data,
-  //         email: userEmail,
-  //         order_date: new Date().toDateString()
-  //       });
-  //       // Get session ID from response
-  //       const sessionId = response.data.sessionId;
-  //       // Redirect to Stripe checkout
-  //       const {error} = await stripe.redirectToCheckout({
-  //         sessionId: sessionId // this session.id will come from backend API
-  //       });
-  //       if(error){
-  //         console.log("Error redirecting to checkout:", error)
-  //         toast.error("Error redirecting to checkout:", error)
-  //       }else{
-  //         saveProduct(data)
-  //       } 
-  // } catch (error) {
-  //       console.log(error)
-  //       toast.error("Error redirecting to checkout:", error)
-  //     }
-  //   };
-    
-
   const handleCheckOut = async () => {
-       try {
+    try {
         const stripe = await loadStripe('pk_test_51NWgMnExICbPENGVQa4fSOLrdgVXUzKzTRdON9TUaVwSZejWNQLoN32tqT8OIBmucwpyKWo2bEyDyh7gQsdXbyfe00i1Lh6Juh');
         const userEmail = localStorage.getItem('userEmail');
-        const response = await axios.post(`${URL}/api/payment/create-checkout-session`,{
-          products: data,
-          email: userEmail,
-          orderDate: new Date().toDateString()
+
+        // Send data to backend
+        const response = await axios.post(`${URL}/api/payment/create-checkout-session`, {
+            products: data,
+            email: userEmail,
         });
+
+        // Redirect to Stripe Checkout
         const sessionId = response.data.sessionId;
         const result = await stripe.redirectToCheckout({
-          sessionId: sessionId // this sessionId will come from backend API
+            sessionId: sessionId
         });
-        if(result.error){
-          console.log("Error redirecting to checkout:", result.error)
-          toast.error("Error redirecting to checkout:", result.error)
+
+        if (result.error) {
+            console.log("Error redirecting to checkout:", result.error);
+            toast.error("Error redirecting to checkout:", result.error);
+        } else {
+            // Order placed successfully
+            console.log("Order placed successfully!");
+            toast.success("Order Placed");
+            dispatch(drop()); // Clear the cart
         }
-      } catch (error) {
-                console.log(error)
-                toast.error("Error redirecting to checkout:", error)
-                
-              }
-                   
-              }
+    } catch (error) {
+        console.error("Error during checkout:", error);
+        toast.error("Error during checkout:", error);
+    }
+};
 
-    //  const handleCheckOut = async () => {
-    //    try {
-    //     const stripe = await loadStripe('pk_test_51NWgMnExICbPENGVQa4fSOLrdgVXUzKzTRdON9TUaVwSZejWNQLoN32tqT8OIBmucwpyKWo2bEyDyh7gQsdXbyfe00i1Lh6Juh');
-    //     const userEmail = localStorage.getItem('userEmail');
-    //     const response = await axios.post(`${URL}/api/payment/create-checkout-session`,{
-    //       products: data,
-    //       email: userEmail,
-    //       orderDate: new Date().toDateString()
-    //     });
-    //     const sessionId = response.data.sessionId;
-    //     const result = await stripe.redirectToCheckout({
-    //       sessionId: sessionId // this sessionId will come from backend API
-    //     });
-    //     if(result.error){
-    //       console.log("Error redirecting to checkout:", result.error)
-    //       toast.error("Error redirecting to checkout:", result.error)
-    //       return;
-    //     }else{
-    //       try {
-    //         console.log("Redirect to Stripe checkout successfully")
-    //         console.log("Saving Order....")
-    //         const userEmail = localStorage.getItem("userEmail");
-    //         // console.log("User Email:", userEmail); 
-    //         const savedResponse = await axios.post(`${URL}/api/orders/foodData`, 
-    //         {
-    //           products: data,
-    //           email: userEmail,
-    //           orderDate: new Date().toDateString()
-    //         }); 
-            
-    //         console.log("Order Saved:", savedResponse.data);
-    //         toast.success("Order Placed");
 
-    //         if (savedResponse.status === 200) {
-    //           dispatch(drop());
-    //         }
-    //       } catch (error) {
-    //         console.log(error)
-    //         toast.error("Saved Product error:", error)
-    //       }
-    //     }
-       
-    //       } catch (error) {
-    //         console.log(error)
-    //         toast.error("Error redirecting to checkout:", error)
-            
-    //       }
-               
-    //       }
-    
+// const handleCheckOut = async () => {
+//   try {
+//     const userEmail = localStorage.getItem("userEmail");
+//     console.log("User Email:", userEmail);
+//     const response = await axios.post(`${URL}/api/orders/foodData`, {
+//       order_data: data,
+//       email: userEmail,
+//       order_date: new Date().toDateString()
+//     });
+
+//     console.log("JSON RESPONSE::::", response.data);
+//     toast.success("Order Placed");
+//     if (response.status === 200) {
+//       dispatch(drop());
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
     const totalPrice = data.reduce((total, food) => total + food.price, 0);
 
   return (
@@ -167,7 +93,7 @@ const Cart = () => {
         </thead>
         <tbody>
           {data.map((food, index) => (
-            <tr>
+            <tr key={index}>
               <th scope='row' >{index + 1}</th>
               <td >{food.name}</td>
               <td>{food.qty}</td>

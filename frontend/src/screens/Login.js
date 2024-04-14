@@ -1,10 +1,10 @@
-import axios from "axios";
-import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {toast} from 'react-toastify';
-import {URL} from '../App'
-
+import { validateEmail } from "../redux/slices/authService";
+import {useDispatch} from "react-redux";
+import { login, loginWithGoogle } from "../redux/slices/cartSlice";
+import {GoogleLogin} from "@react-oauth/google"
 
 const initialState = {
   email: "",
@@ -13,38 +13,64 @@ const initialState = {
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState(initialState);
   const { email, password } = formData;
 
     const handleChange = (e) => {
+      const {name, value} = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]:value
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post(
-        `${URL}/api/users/login`,
-        formData
-      );
-      console.log("Login Successfully", response.data);
-      toast.success("Login Successfully")
-      localStorage.setItem("userEmail", response.data.email)
-      localStorage.setItem("token", response.data.token)
-      console.log("successfully got", localStorage.getItem("token"))
-      navigate("/")
-    } catch (error) {
-      console.log(error);
+    if(!email || !password){
+      return toast.error("All fields are required")
     }
-  };
 
+    if(!validateEmail){
+      toast.error("Please enter a valid email")
+    }
+
+    const userData = {
+      email, 
+      password
+    }
+   
+    const response = await dispatch(login(userData));
+    toast.success("login successfully")
+    localStorage.setItem("userEmail", response.email)
+    localStorage.setItem("token", response.token)
+    navigate("/")
+    };
+
+    const googleLogin = async(credentialResponse) => {
+      console.log(credentialResponse)
+    const response =  await dispatch(
+        loginWithGoogle({userToken: credentialResponse.credential})
+      )
+      localStorage.setItem("userEmail", response.email)
+      localStorage.setItem("token", response.token)
+      navigate("/")
+    };
+  
   return (
     <>
       <div className="container">
+        <div>
+          <GoogleLogin
+          onSuccess={googleLogin}
+          onError={() => {
+            console.log("Login Failed");
+            toast.error("Login Failed");
+          }}
+          useOneTap
+          />
+        </div>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">
