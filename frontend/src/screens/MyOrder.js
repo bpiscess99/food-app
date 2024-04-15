@@ -4,29 +4,34 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 import {toast} from 'react-toastify';
 import {URL} from '../App'
+import { useDispatch, useSelector } from "react-redux";
+import { myOrderFood } from "../redux/slices/food/foodSlice";
 
 const MyOrder = () => {
-  const [orderData, setOrderData] = useState([]);
+  // const [orderData, setOrderData] = useState([]);
+  const dispatch = useDispatch();
+  const orderData = useSelector((state) => state.food.orderData)
 
-  const fetchOrder = async () => {
-    try {
-      const response = await axios.post(
-        `${URL}/api/orders/myOrder`,
-        {
-          email: localStorage.getItem("userEmail"),
-        }
-      );
-      setOrderData(response.data);
-      console.log("Response:", response.data)
-      toast.success("Your Placed Orders")
-    } catch (error) {
-      console.error("Error Fetching order:", error);
-    }
-  };
+  // const fetchOrder = async () => {
+
+    // try {
+    //   const response = await axios.post(
+    //     `${URL}/api/orders/myOrder`,
+    //     {
+    //       email: localStorage.getItem("userEmail"),
+    //     }
+    //   );
+    //   setOrderData(response.data);
+    //   console.log("Response:", response.data)
+    //   toast.success("Your Placed Orders")
+    // } catch (error) {
+    //   console.error("Error Fetching order:", error);
+    // }
+  // };
 
   useEffect(() => {
-    fetchOrder();
-  }, []);
+    dispatch(myOrderFood(localStorage.getItem("userEmail")))
+  }, [dispatch]);
 
   return (
     <div>
