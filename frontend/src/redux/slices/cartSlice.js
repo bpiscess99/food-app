@@ -84,13 +84,6 @@ const cartSlice = createSlice({
         },
         drop: () => []
     },
-    // extraReducers: (builder) => {
-    //     builder
-    //     // LoginWithGoogle
-    //     .addCase(loginWithGoogle.rejected, (state, action) => {
-    //         state.message
-    //     })
-    // }
 });
 
 export const {add, remove, update, drop} = cartSlice.actions

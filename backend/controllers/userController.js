@@ -8,10 +8,12 @@ const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "1d" });
 };
 
-const client = new OAuth2Client({
-    clientId: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_SECRET_KEY
-});
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+// const client = new OAuth2Client({
+//     clientId: process.env.GOOGLE_CLIENT_ID,
+//     clientSecret: process.env.GOOGLE_SECRET_KEY
+// });
 
 // console.log("ClientID:", client.clientId)
 // console.log("ClientSecret:", client.clientSecret)
