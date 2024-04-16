@@ -41,10 +41,8 @@ const Login = () => {
       password
     }
    
-    const response = await dispatch(login(userData));
+    await dispatch(login(userData));
     toast.success("login successfully")
-    localStorage.setItem("userEmail", response.email)
-    localStorage.setItem("token", response.token)
     navigate("/")
     };
 

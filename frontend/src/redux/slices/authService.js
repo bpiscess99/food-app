@@ -1,4 +1,5 @@
 import axios  from "axios";
+import {toast} from "react-toastify"
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_SERVER;
 const API_URL = `${BACKEND_URL}/api/users/`;
@@ -12,23 +13,48 @@ export const validateEmail = (email) => {
 
 // Register 
 const register = async (userData) => {
- const response = await axios.post(API_URL + "register", userData,
-{withCredentials: true}
-);
-return response.data
+    try {
+        const response = await axios.post(API_URL + "register", userData,
+        {withCredentials: true}
+    );
+    return response.data
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) ||
+        error.message ||
+        error.toString();
+            toast.toString();
+        toast.error(message)
+    }
 };
 
 // Login 
 const login = async (userData) => {
-    const response = await axios.post(API_URL + "login", userData)
-    return response.data;
+    try {
+        const response = await axios.post(API_URL + "login", userData)
+        return response.data;    
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) ||
+        error.message ||
+        error.toString();
+            toast.toString();
+        toast.error(message)
+    }
+    
 };
 
 // Login With Google
 
 const loginWithGoogle = async (userToken) => {
-    const response = await axios.post(API_URL + "google/callback", userToken);
-    return response.data;
+    try {
+        const response = await axios.post(API_URL + "google/callback", userToken);
+        return response.data;
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) ||
+        error.message ||
+        error.toString();
+            toast.toString();
+        toast.error(message)
+    }
 }
 
 const authService = {

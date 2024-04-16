@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import axios from "axios";
-import {toast} from 'react-toastify';
-import {URL} from '../App'
+// import axios from "axios";
+// import {toast} from 'react-toastify';
+// import {URL} from '../App'
 import { useDispatch, useSelector } from "react-redux";
 import { myOrderFood } from "../redux/slices/food/foodSlice";
 
 const MyOrder = () => {
-  // const [orderData, setOrderData] = useState([]);
+  const [orderData, setOrderData] = useState([]);
   const dispatch = useDispatch();
-  const orderData = useSelector((state) => state.food.orderData)
+  // const orderData = useSelector((state) => state.food.orderData)
+  // console.log("OrderData:", orderData)
 
   // const fetchOrder = async () => {
 
@@ -28,10 +29,16 @@ const MyOrder = () => {
     //   console.error("Error Fetching order:", error);
     // }
   // };
-
+try {
   useEffect(() => {
-    dispatch(myOrderFood(localStorage.getItem("userEmail")))
+    const response = dispatch(myOrderFood())
+    setOrderData(response.data);
+    console.log("response:", response)
   }, [dispatch]);
+} catch (error) {
+  console.log("error:", error)
+}
+  
 
   return (
     <div>
