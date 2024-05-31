@@ -48,25 +48,26 @@ const Cart = () => {
           if (error) {
               console.log("Error redirecting to checkout:", error);
               toast.error("Error redirecting to checkout:", error.message);
-          } else {
-              // Order placed successfully
-              // console.log("Order placed successfully!");
+          } 
+          // else {
+          //     // Order placed successfully
+          //     // console.log("Order placed successfully!");
   
-              // Add a new API call to save the order after payment successful
-              const saveOrderResponse = await axios.post(`${URL}/api/payment/saveOrder`, {
-                  products: data,
-                  email: userEmail,
-              });
+          //     // Add a new API call to save the order after payment successful
+          //     const saveOrderResponse = await axios.post(`${URL}/api/payment/saveOrder`, {
+          //         products: data,
+          //         email: userEmail,
+          //     });
   
-              if (saveOrderResponse.status === 201) {
-                  console.log("Order saved successfully!");
-                  toast.success("Order Placed");
-                  dispatch(drop()); // Clear the cart
-              } else {
-                  console.error("Failed to save order:", saveOrderResponse.data.error);
-                  toast.error("Failed to save order:", saveOrderResponse.data.error);
-              }
-          }
+          //     if (saveOrderResponse.status === 201) {
+          //         console.log("Order saved successfully!");
+          //         toast.success("Order Placed");
+          //         dispatch(drop()); // Clear the cart
+          //     } else {
+          //         console.error("Failed to save order:", saveOrderResponse.data.error);
+          //         toast.error("Failed to save order:", saveOrderResponse.data.error);
+          //     }
+          // }
       } catch (error) { 
           console.error("Error during checkout:", error);
           toast.error("Error during checkout:", error);
