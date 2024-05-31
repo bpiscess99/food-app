@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 router.post("/create-checkout-session", stripeIntegration )
-router.post("/saveOrder", saveOrder)
+// router.post("/saveOrder", saveOrder)
 
 
 module.exports = router;

@@ -26,7 +26,7 @@ app.use(cors({
 app.use("/api/users", userRoute)
 app.use("/api/foods", foodRoute)
 app.use("/api/orders", orderRoute)
-app.use("/api/payment", paymentRoute)
+app.use("/api/payments", paymentRoute)
 
 // Routes
 app.get('/', (req, res) => {

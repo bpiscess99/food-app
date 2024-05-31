@@ -9,7 +9,7 @@ const orderSchema = mongoose.Schema(
      },
      order_data: {
         type: Array,
-        required: true,
+        default: [],
      },
      order_date: {
       type: Date, // Change the type to Date

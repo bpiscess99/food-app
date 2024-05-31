@@ -26,7 +26,7 @@ const myOrderFood = asyncHandler(async(req, res) => {
     const {email} = req.body;
     const orderData = await Order.findOne({email})
 
-    if(!orderData){
+    if(!orderData){ 
       res.status(400)
       throw new Error("No Order found")
     }else{

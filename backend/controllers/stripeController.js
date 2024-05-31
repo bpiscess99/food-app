@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const Order = require("../model/orderModel");
+// const Order = require("../model/orderModel");
 
 
 const stripe = require("stripe")("sk_test_51NWgMnExICbPENGVoWn49q0OL0WHnEdxarNVdR5ihco6gNCP68vlBr88zXx72YvoknJybThXBqhuBXJI7f4uRJOo00g0OYw8bx")
@@ -41,23 +41,23 @@ const stripeIntegration = asyncHandler(async (req, res) => {
 });
 
 
-// Save Order
-const saveOrder = asyncHandler(async (req, res) => {
-    const { email, products } = req.body;
+// // Save Order
+// const saveOrder = asyncHandler(async (req, res) => {
+//     const { email, products } = req.body;
 
-    try {
-        // Save the order in the database 
-        const newOrder = new Order({
-            email,
-            order_data: products,
-        });
-        await newOrder.save();
-        res.status(201).json({ message: "Order saved successfully" });
-    } catch (error) {
-        console.error("Error saving order:", error);
-        res.status(500).json({ error: "Failed to save order" });
-    }
-});
+//     try {
+//         // Save the order in the database 
+//         const newOrder = new Order({
+//             email,
+//             order_data: products,
+//         });
+//         await newOrder.save();
+//         res.status(201).json({ message: "Order saved successfully" });
+//     } catch (error) {
+//         console.error("Error saving order:", error);
+//         res.status(500).json({ error: "Failed to save order" });
+//     }
+// });
 
 
 
@@ -113,6 +113,6 @@ const saveOrder = asyncHandler(async (req, res) => {
 
 module.exports = {
     stripeIntegration,
-    saveOrder
+    // saveOrder
 
 };
