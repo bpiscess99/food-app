@@ -48,72 +48,12 @@ const Cart = () => {
               console.log("Error redirecting to checkout:", error);
               toast.error("Error redirecting to checkout:", error.message);
           } 
-        }catch(error){
+          
+      } catch (error) { 
           console.error("Error during checkout:", error);
         toast.error("Error during checkout:", error.message);
         }
   };
-  
-  
-//   const handleCheckOut = async () => {
-//     try {
-//         const stripe = await loadStripe('pk_test_51NWgMnExICbPENGVQa4fSOLrdgVXUzKzTRdON9TUaVwSZejWNQLoN32tqT8OIBmucwpyKWo2bEyDyh7gQsdXbyfe00i1Lh6Juh');
-//         const userEmail = localStorage.getItem('userEmail');
-//         // console.log("userEmail:", userEmail)
-
-//         if (!userEmail) {
-//           console.error("User email not found in localStorage.");
-//           toast.error("User email not found.");
-//           return;
-//       }
-
-//         // Send data to backend
-//         const response = await axios.post(`${URL}/api/payment/create-checkout-session`, {
-//             products: data,
-//             email: userEmail,
-//         });
-
-//         // Redirect to Stripe Checkout
-//         const sessionId = response.data.sessionId;
-//         const result = await stripe.redirectToCheckout({
-//             sessionId: sessionId
-//         });
-
-//         if (result.error) {
-//             console.log("Error redirecting to checkout:", result.error);
-//             toast.error("Error redirecting to checkout:", result.error);
-//         } else {
-//             // Order placed successfully
-//             console.log("Order placed successfully!");
-//             toast.success("Order Placed");
-//             dispatch(drop()); // Clear the cart
-//         }
-//     } catch (error) { 
-//         console.error("Error during checkout:", error);
-//         toast.error("Error during checkout:", error);
-//     }
-// };
-
-
-// const handleCheckOut = async () => {
-//   try {
-//     const userEmail = localStorage.getItem("userEmail");
-//     console.log("User Email:", userEmail);
-//     const response = await axios.post(`${URL}/api/orders/foodData`, {
-//       order_data: data,
-//       email: userEmail,
-//       order_date: new Date().toDateString()
-//     });
-
-//     console.log("JSON RESPONSE::::", response.data);
-//     toast.success("Order Placed");
-//     if (response.status === 200) {
-//       dispatch(drop());
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 
     const totalPrice = data.reduce((total, food) => total + food.price, 0);
 

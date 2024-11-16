@@ -24,7 +24,6 @@ const stripeIntegration = asyncHandler(async (req, res) => {
     }));
     const totalAmount = products.reduce((total, product) => total + product.price * product.qty, 0)
 
-
     try {
         // Create a Stripe Checkout session
         const session = await stripe.checkout.sessions.create({
@@ -62,7 +61,6 @@ const stripeIntegration = asyncHandler(async (req, res) => {
     }
 });
 
-
 // Stripe Webhook for Payment Confirmation
 const handleStripeWebhook = asyncHandler(async (req, res) => {
     const event = req.body;
@@ -87,8 +85,9 @@ const handleStripeWebhook = asyncHandler(async (req, res) => {
 });
 
 
+
+
 module.exports = {
     stripeIntegration,
     handleStripeWebhook
-
 };

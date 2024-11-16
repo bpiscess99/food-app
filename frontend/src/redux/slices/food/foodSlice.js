@@ -44,10 +44,11 @@ const foodSlice = createSlice({
         .addCase(myOrderFood.rejected, (state, action) => {
             state.isLoading = false;
             state.isError = action.payload;
+            toast.error("Failed to fetch orders");
         })
     }
 })
 
 
-export const foodActions = foodSlice.actions;
+// export const foodActions = foodSlice.actions;
 export default foodSlice.reducer;

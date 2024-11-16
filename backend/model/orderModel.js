@@ -34,6 +34,8 @@ const orderSchema = mongoose.Schema(
      order_data: {
         type: [orderItemSchema],
         required: true,
+        type: Array,
+        default: [],
      },
      order_date: {
       type: Date, // Change the type to Date

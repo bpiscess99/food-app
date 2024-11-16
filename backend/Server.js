@@ -13,7 +13,7 @@ const foodRoute = require("./routes/foodRoute");
 const orderRoute = require("./routes/orderRoute");
 const paymentRoute = require("./routes/paymentRoute");
 const chatRoute = require("./routes/chatRoute");
-// Passport routes 
+// Passport routes for facebook authentication 
 const facebookRoute = require("./routes/facebookRoute");
 const passport = require("./middleWares/passportConfig")
 
@@ -85,7 +85,6 @@ io.on("connection", (socket) => {
     console.log("A user disconnected:", socket.id);
   });
 });
-
 
 // Connected to DB and start the server
 const Port = process.env.PORT || 5000;
