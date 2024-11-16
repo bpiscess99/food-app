@@ -1,88 +1,72 @@
 import React, { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-// import axios from "axios";
-// import {toast} from 'react-toastify';
-// import {URL} from '../App'
-import { useDispatch, useSelector } from "react-redux";
-import { myOrderFood } from "../redux/slices/food/foodSlice";
+import axios from "axios";
+import {URL} from '../App'
+
 
 const MyOrder = () => {
-  const [orderData, setOrderData] = useState([]);
-  const dispatch = useDispatch();
-  // const orderData = useSelector((state) => state.food.orderData)
-  // console.log("OrderData:", orderData)
+  const [orderData, setOrderData] = useState(null);
 
-  // const fetchOrder = async () => {
+    useEffect(() => {
+    fetchOrder();
+  }, []);
 
-    // try {
-    //   const response = await axios.post(
-    //     `${URL}/api/orders/myOrder`,
-    //     {
-    //       email: localStorage.getItem("userEmail"),
-    //     }
-    //   );
-    //   setOrderData(response.data);
-    //   console.log("Response:", response.data)
-    //   toast.success("Your Placed Orders")
-    // } catch (error) {
-    //   console.error("Error Fetching order:", error);
-    // }
-  // };
-try {
-  useEffect(() => {
-    const response = dispatch(myOrderFood())
-    setOrderData(response.data);
-    console.log("response:", response)
-  }, [dispatch]);
-} catch (error) {
-  console.log("error:", error)
-}
+  const fetchOrder = async () => {
+
+    try {
+      const response = await axios.post(
+        `${URL}/api/orders/myOrder`,
+        {
+          email: localStorage.getItem("userEmail"),
+        }
+      );
+      console.log("Response:", response.data)
+      setOrderData(response.data.orderData);
+    } catch (error) {
+      console.error("Error Fetching order:", error);
+    }
+  };
+
   
 
   return (
-    <div>
-      <Navbar />
-      <div className="container">
-        <div className="row">
-          {orderData?.products?.products
-            ?.slice(0)
-            .reverse()
-            .map((item) =>
-              item.map((arrayData) => (
-                <div key={arrayData._id} className="col-12 col-md-6 col-lg-3">
-                  <div
-                    className="card mt-3"
-                    style={{ width: "16rem", maxHeight: "360px" }}
-                  >
-                    {/* <img
-                      src={arrayData.img}
-                      className="card-img-top"
-                      alt="..."
-                      style={{ height: "120px", objectFit: "fill" }}
-                    /> */}
-                    <div className="card-body">
-                      <h5 className="card-title">{arrayData.name}</h5>
-                      <div
-                        className="container w-100 p-0"
-                        style={{ height: "38px" }}
-                      >
-                        <span className="m-1">{arrayData.qty}</span>
-                        <span className="m-1">{arrayData.size}</span>
-                        <span className="m-1">{arrayData.Order_date}</span>
-                        <div className="d-inline ms-2 h-100 w-20 fs-5">
-                          Rs{arrayData.price}/-
-                        </div>
-                      </div>
+<div>
+    <Navbar />
+    <div className="container">
+      <div className="row">
+        {Array.isArray(orderData) && orderData.length > 0 ? (
+          <div className="col-12">
+            <h3>Your Orders</h3>
+            <span>{localStorage.getItem("userEmail")}</span>
+            {orderData.map((order) => (
+              <div key={order._id} className="card mt-3">
+                <div className="card-body">
+                  <h5 className="card-title">Order Summary</h5>
+                  <p><strong>Order Date:</strong> {new Date(order.order_date).toLocaleString()}</p>
+                  <p><strong>Total Amount:</strong> Rs {order.total_amount}</p>
+                  
+                  <h6>Items:</h6>
+                  {order.order_data.map((item) => (
+                    <div key={item._id} className="mb-2">
+                      <p><strong>Item:</strong> {item.item}</p>
+                      <p><strong>Quantity:</strong> {item.quantity}</p>
+                      <p><strong>Price:</strong> Rs {item.price}</p>
+                      <p><strong>Size:</strong> {item.size}</p>
                     </div>
-                  </div>
+                  ))}
                 </div>
-              ))
-            )}
-        </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="col-12">No orders found.</div>
+        )}
       </div>
-      <Footer />
     </div>
+    <Footer />
+  </div>
+
   );
 };
 

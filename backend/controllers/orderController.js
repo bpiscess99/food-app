@@ -24,7 +24,10 @@ try {
 // get placed order from database
 const myOrderFood = asyncHandler(async(req, res) => {
     const {email} = req.body;
-    const orderData = await Order.findOne({email})
+    if(!email){
+      res.status(400).json({message: "Please provide your email."})
+    }
+    const orderData = await Order.find({email}).sort({order_date:-1})
 
     if(!orderData){
       res.status(400)
@@ -33,8 +36,6 @@ const myOrderFood = asyncHandler(async(req, res) => {
       res.json({orderData, message: "Order Data received"})
     }
 });
-
-
 
 module.exports = {
    orderFood,

@@ -51,7 +51,15 @@ const Navbar = (props) => {
                 My Orders
               </Link>
             </li>
+            
            : "" }
+           {(localStorage.getItem("token")) ?
+           <li className="nav-item">
+                <Link className="nav-link active fs-5" aria-current="page" to="/openai">
+                  OpenAI
+                </Link>
+              </li>
+              : ""}
             </ul>
           
             {(!localStorage.getItem("token")) ?

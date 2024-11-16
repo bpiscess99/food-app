@@ -172,7 +172,7 @@ const loginWithGoogle = asyncHandler(async (req, res) => {
     // Generate a Token
 
     if (newUser) {
-      const token = generateToken(user._id);
+      const token = generateToken(newUser._id);
 
       // Send HTTP-only cookie
       res.cookie("token", token, {
@@ -195,8 +195,9 @@ const loginWithGoogle = asyncHandler(async (req, res) => {
   }
 
   // If user exists, login
+  
+  const token = generateToken(user._id);
   if (user) {
-    const token = generateToken(user._id);
     // Send HTTP-only cookie
     res.cookie("token", token, {
       path: "/",
@@ -212,13 +213,17 @@ const loginWithGoogle = asyncHandler(async (req, res) => {
       name,
       email,
       location,
+      token
     });
   }
 });
+
+
 
 module.exports = {
   registerUser,
   loginUser,
   getUser,
   loginWithGoogle,
+  
 };

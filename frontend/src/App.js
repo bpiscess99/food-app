@@ -11,18 +11,18 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Success from "./components/Success.js";
 import Cancel from "./components/Cancel.js";
-// import axios from "axios";
 import {GoogleOAuthProvider} from "@react-oauth/google";
-
+import OrderTracking from "./screens/OrderTracking.js";
+import ChatMessage from "./screens/ChatMessage.js";
+import axios from "axios"
 export const URL = process.env.REACT_APP_BACKEND_SERVER;
-// console.log("URL", URL)
 
-// axios.defaults.withCredentials = true;
-
+axios.defaults.withCredentials = true;
 
 function App() {
   return (
     <>
+          
       <Router>
       <ToastContainer/>
       <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
@@ -33,6 +33,8 @@ function App() {
             <Route exact path="/myOrder" element={<MyOrder />} />
             <Route exact path="/success" element={<Success />} />
             <Route exact path="/cancel" element={<Cancel/>} />
+            <Route path="/order-tracking" element={<OrderTracking/>} />
+            <Route exact path="/openai" element={<ChatMessage/>} />
           </Routes>
           </GoogleOAuthProvider>
       </Router>

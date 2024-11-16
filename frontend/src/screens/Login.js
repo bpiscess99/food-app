@@ -5,6 +5,7 @@ import { validateEmail } from "../redux/slices/authService";
 import {useDispatch} from "react-redux";
 import { login, loginWithGoogle } from "../redux/slices/cartSlice";
 import {GoogleLogin} from "@react-oauth/google"
+import FacebookLogin from "./FacebookLogin";
 
 const initialState = {
   email: "",
@@ -16,6 +17,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState(initialState);
   const { email, password } = formData;
+
 
     const handleChange = (e) => {
       const {name, value} = e.target;
@@ -51,24 +53,17 @@ const Login = () => {
     const response =  await dispatch(
         loginWithGoogle({userToken: credentialResponse.credential})
       )
-      localStorage.setItem("userEmail", response.email)
-      localStorage.setItem("token", response.token)
-      navigate("/")
+      // console.log("Dispatch Response:", response)
+
+      localStorage.setItem("userEmail", response.payload.email)
+      localStorage.setItem("token", response.payload.token)
+      navigate("/")   
     };
   
   return (
     <>
       <div className="container">
-        <div>
-          <GoogleLogin
-          onSuccess={googleLogin}
-          onError={() => {
-            console.log("Login Failed");
-            toast.error("Login Failed");
-          }}
-          useOneTap
-          />
-        </div>
+        
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">
@@ -105,6 +100,18 @@ const Login = () => {
           </button>
           <Link to="/register" className="m-3 btn btn-danger">Register</Link>
         </form>
+        <div style={{width: "100px", margin: "5px"}}>
+          <GoogleLogin
+          onSuccess={googleLogin}
+          onError={() => {
+            console.log("Login Failed");
+            toast.error("Login Failed");
+          }}
+          useOneTap
+          />
+        </div>
+          <FacebookLogin/>
+
       </div>
     </>
   );

@@ -1,10 +1,13 @@
 const express = require("express");
-const {stripeIntegration, saveOrder} = require("../controllers/stripeController");
+const {stripeIntegration, handleStripeWebhook} = require("../controllers/stripeController");
 const router = express.Router();
 
 
-router.post("/create-checkout-session", stripeIntegration )
-router.post("/saveOrder", saveOrder)
+router.post("/stripe", stripeIntegration)
+router.post("/webhook", express.raw({type: "application/json"}), handleStripeWebhook)
+// // router.post("/saveOrder", saveOrder)
+// router.post("/place-order", placeOrder)
+// router.post("/save-order", myOrderFood)
 
 
 module.exports = router;

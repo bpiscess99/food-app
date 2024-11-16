@@ -25,7 +25,6 @@ const Cart = () => {
       try {
           const stripe = await loadStripe('pk_test_51NWgMnExICbPENGVQa4fSOLrdgVXUzKzTRdON9TUaVwSZejWNQLoN32tqT8OIBmucwpyKWo2bEyDyh7gQsdXbyfe00i1Lh6Juh');
           const userEmail = localStorage.getItem('userEmail');
-          // console.log("userEmail:", userEmail)
   
           if (!userEmail) {
             console.error("User email not found in localStorage.");
@@ -34,7 +33,7 @@ const Cart = () => {
         }
   
           // Send data to backend
-          const response = await axios.post(`${URL}/api/payment/create-checkout-session`, {
+          const response = await axios.post(`${URL}/api/payments/stripe`, {
               products: data,
               email: userEmail,
           });
@@ -48,29 +47,11 @@ const Cart = () => {
           if (error) {
               console.log("Error redirecting to checkout:", error);
               toast.error("Error redirecting to checkout:", error.message);
-          } else {
-              // Order placed successfully
-              // console.log("Order placed successfully!");
-  
-              // Add a new API call to save the order after payment successful
-              const saveOrderResponse = await axios.post(`${URL}/api/payment/saveOrder`, {
-                  products: data,
-                  email: userEmail,
-              });
-  
-              if (saveOrderResponse.status === 201) {
-                  console.log("Order saved successfully!");
-                  toast.success("Order Placed");
-                  dispatch(drop()); // Clear the cart
-              } else {
-                  console.error("Failed to save order:", saveOrderResponse.data.error);
-                  toast.error("Failed to save order:", saveOrderResponse.data.error);
-              }
-          }
-      } catch (error) { 
+          } 
+        }catch(error){
           console.error("Error during checkout:", error);
-          toast.error("Error during checkout:", error);
-      }
+        toast.error("Error during checkout:", error.message);
+        }
   };
   
   
